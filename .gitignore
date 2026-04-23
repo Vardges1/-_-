@@ -5,3 +5,4 @@ node_modules
 *.pem
 .DS_Store
 coverage
+_git_report.txt

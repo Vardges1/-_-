@@ -1,2 +1,0 @@
-/Users/vardges/Desktop/ТестовоеЗадание
-STEP2: .git exists
