@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model Task {
+  id          String        @id @default(cuid())
+  title       String
+  description String?
+  priority    TaskPriority  @default(MEDIUM)
+  status      TaskStatus    @default(TODO)
+  dueDate     DateTime?
+  category    String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  subtasks    Subtask[]
+}
+
+model Subtask {
+  id        String   @id @default(cuid())
+  title     String
+  completed Boolean  @default(false)
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([taskId])
+}
